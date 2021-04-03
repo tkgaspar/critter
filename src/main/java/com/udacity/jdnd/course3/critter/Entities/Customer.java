@@ -20,10 +20,10 @@ public class Customer {
     private String phoneNumber;
     private String notes;
 
-    @OneToMany(mappedBy="owner",targetEntity=Pet.class,cascade = CascadeType.ALL)
-    private Set<Pet> pets;
+    @OneToMany(mappedBy="owner")
+    private List<Pet> pets;
 
-    public Customer(long id, String name, String phoneNumber, String notes, HashSet<Pet> pets) {
+    public Customer(long id, String name, String phoneNumber, String notes, List<Pet> pets) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -71,17 +71,17 @@ public class Customer {
         this.notes = notes;
     }
 
-    public Set<Pet> getPets() {
+    public List<Pet> getPets() {
         return pets;
     }
 
-    public void setPets(Set<Pet> pets) {
+    public void setPets(List<Pet> pets) {
         this.pets = pets;
     }
 
     public void addPet(Pet pet) {
         if (pets == null) {
-            pets = new HashSet<>();
+            pets = new ArrayList<>();
         }
 
         pets.add(pet);

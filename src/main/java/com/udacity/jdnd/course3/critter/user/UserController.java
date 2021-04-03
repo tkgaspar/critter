@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.udacity.jdnd.course3.critter.Entities.Customer;
 import com.udacity.jdnd.course3.critter.Entities.Employee;
@@ -35,6 +36,7 @@ public class UserController {
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
         Customer customer = new Customer(customerDTO.getName(), customerDTO.getPhoneNumber());
+        customerService.save(customer);
         return convertCustomerToCustomerDTO(customerService.findById(customerService.save(customer)));
     }
 
@@ -90,7 +92,7 @@ public class UserController {
            List<Long>petIds=customerDTO.getPetIds();
            if(petIds!=null){
                List<Pet>pets=petService.getAllPetsByIds(petIds);
-               customer.setPets(Sets.newHashSet(pets));
+               customer.setPets(Lists.newArrayList(pets));
            }
            return customer;
 

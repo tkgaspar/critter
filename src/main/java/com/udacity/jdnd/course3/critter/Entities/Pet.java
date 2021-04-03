@@ -37,6 +37,7 @@ public class Pet {
     public Pet(PetType type, String name, LocalDate birthDate, String notes) {
         this.type = type;
         this.name = name;
+        this.owner=owner;
         this.birthDate = birthDate;
         this.notes = notes;
     }
