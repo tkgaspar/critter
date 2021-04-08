@@ -73,7 +73,7 @@ public class Pet {
         return owner;
     }
 
-    public void setOwner(Customer customer) {
+    public void setOwner(Customer owner) {
         this.owner = owner;
     }
 

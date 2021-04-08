@@ -35,9 +35,9 @@ public class UserController {
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
-        Customer customer = new Customer(customerDTO.getName(), customerDTO.getPhoneNumber());
-        customerService.save(customer);
-        return convertCustomerToCustomerDTO(customerService.findById(customerService.save(customer)));
+        Customer customer = convertCustomerDTOToCustomer(customerDTO);
+        Customer savedCustomer = customerService.save(customer);
+        return convertCustomerToCustomerDTO(savedCustomer);
     }
 
     @GetMapping("/customer")
@@ -58,8 +58,10 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        Employee employee = new Employee(employeeDTO.getName(), employeeDTO.getSkills());
-        return convertEmployeeToEmployeeDTO(employeeService.findById(employeeService.save(employee)));
+        Employee employee=convertEmployeeDTOToEmployee(employeeDTO);
+        Employee savedEmployee=employeeService.save(employee);
+        return convertEmployeeToEmployeeDTO(savedEmployee);
+
     }
 
     @GetMapping("/employee/{employeeId}")                               //changed annotation to GetMapping
@@ -77,31 +79,59 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        List<Employee> allEmployees = employeeService.getAllEmployees();
+        List<EmployeeDTO> ableAndAvailableEmpDTOs = new ArrayList<>();
+        allEmployees.forEach(i -> {
+            if (i.getDaysAvailable().contains(employeeDTO.getDate().getDayOfWeek()) && i.getSkills().containsAll(employeeDTO.getSkills())) {
+                ableAndAvailableEmpDTOs.add(convertEmployeeToEmployeeDTO(i));
+            }
+        });
+        return ableAndAvailableEmpDTOs;
     }
 
     private CustomerDTO convertCustomerToCustomerDTO(Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();
-        BeanUtils.copyProperties(customer, customerDTO);
+        BeanUtils.copyProperties(customer, customerDTO, "pets");
+        // Convert List of Pets to List of PetIds
+        List<Long> petIds = new ArrayList<>();
+        List<Pet> pets = customer.getPets();
+        if (pets != null) {
+            for (Pet p : pets) {
+                petIds.add(p.getId());
+            }
+            customerDTO.setPetIds(petIds);
+        }
         return customerDTO;
     }
 
-    private Customer convertCustomerDTOToCustomer(CustomerDTO customerDTO){
-        Customer customer=new Customer();
-           BeanUtils.copyProperties(customerDTO, customer);
-           List<Long>petIds=customerDTO.getPetIds();
-           if(petIds!=null){
-               List<Pet>pets=petService.getAllPetsByIds(petIds);
-               customer.setPets(Lists.newArrayList(pets));
-           }
-           return customer;
-
+    private Customer convertCustomerDTOToCustomer(CustomerDTO customerDTO) {
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDTO, customer, "petIds");
+        List<Long> petIds = customerDTO.getPetIds();
+        if (petIds != null) {
+            List<Pet> pets = petService.getAllPetsByIds(petIds);
+            customer.setPets(pets);
+        }
+        return customer;
     }
 
     private EmployeeDTO convertEmployeeToEmployeeDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        BeanUtils.copyProperties(employee, employeeDTO);
+        BeanUtils.copyProperties(employee, employeeDTO, "skills", "daysAvailable");
+        Set<EmployeeSkill> skills = employee.getSkills();
+        employeeDTO.setSkills(skills);
+        Set<DayOfWeek> daysAvailable = employee.getDaysAvailable();
+        employeeDTO.setDaysAvailable(daysAvailable);
         return employeeDTO;
+    }
+
+    private Employee convertEmployeeDTOToEmployee(EmployeeDTO employeeDTO){
+        Employee employee=new Employee();
+        BeanUtils.copyProperties(employeeDTO,employee,"skills","daysAvailable");
+        employee.setDaysAvailable(employeeDTO.getDaysAvailable());
+        employee.setSkills(employeeDTO.getSkills());
+        return employee;
+
     }
 
 }

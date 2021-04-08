@@ -66,19 +66,14 @@ public class CritterFunctionalTest {
     public void testAddPetsToCustomer() {
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
-        System.out.println("CustomerDTO newCustomer getId returns: "+newCustomer.getName()+"  "+newCustomer.getId());
 
         PetDTO petDTO = createPetDTO();
         petDTO.setOwnerId(newCustomer.getId());
-        System.out.println(" PetDTO petDTO.getOwnerId returns: "+petDTO.getOwnerId());
         PetDTO newPet = petController.savePet(petDTO);
-        System.out.println("PetDTO newPet.getOwnerId returns: "+newPet.getOwnerId());
 
         //make sure pet contains customer id
         PetDTO retrievedPet = petController.getPet(newPet.getId());
-        System.out.println("PetDTO retrievedPet.getOwnerId returns: "+retrievedPet.getOwnerId());
         Assertions.assertEquals(retrievedPet.getId(), newPet.getId());
-        System.out.println( "newcustomer.getId returns: "+newCustomer.getId());
         Assertions.assertEquals(retrievedPet.getOwnerId(), newCustomer.getId());
 
         //make sure you can retrieve pets by owner

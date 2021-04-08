@@ -6,12 +6,14 @@ import com.udacity.jdnd.course3.critter.Entities.Pet;
 import com.udacity.jdnd.course3.critter.Repositories.CustomerRepository;
 import com.udacity.jdnd.course3.critter.Repositories.PetRepository;
 import com.udacity.jdnd.course3.critter.pet.PetDTO;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,8 +24,12 @@ public class PetService {
     CustomerRepository customerRepository;
 
 
-    public Long savePet(Pet pet) {
-        return petRepository.save(pet).getId();
+    public Pet savePet(Pet pet) {
+        Pet savedPet=petRepository.save(pet);
+        Customer customer=savedPet.getOwner();
+        customer.addPet(savedPet);
+        customerRepository.save(customer);
+        return savedPet;
     }
 
 
@@ -47,6 +53,17 @@ public class PetService {
         return petRepository.findAll();
     }
 
-
+    public List<Pet>getPetsByOwnerId(Long ownerId){
+        Customer customer =customerRepository.getOne(ownerId);
+        return customer.getPets();
+    }
+    public Pet findById(long petId){
+        Optional<Pet> pet = petRepository.findById(petId);
+        if(pet.isPresent()){
+            return pet.get();
+        } else {
+            throw new ObjectNotFoundException(300,"Pet with id: "+ petId + " not found");
+        }
+    }
 
 }

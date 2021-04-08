@@ -8,26 +8,29 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "SCHEDULE")
 public class Schedule {
     @Id
     @GeneratedValue
     private long id;
 
     @ManyToMany(targetEntity = Employee.class)
-    private List<Long> employeeIds;
-
+    @Column(name="SCHEDULE_EMPLOYEEIDS")
+    private List<Employee> employeeIds;
+    @Column(name="SCHEDULE_PETIDS")
     @ManyToMany(targetEntity = Pet.class)
-    private List<Long> petIds;
-
+    private List<Pet> petIds;
+    @Column(name="SCHEDULE_CUSTOMERIDS")
     @ManyToMany(targetEntity = Customer.class)
-    private List<Long> customerIds;
+    private List<Customer> customerIds;
 
     private LocalDate date;
 
     @ElementCollection
+    @Column(name="SCHEDULE_ACTIVITIES")
     private Set<EmployeeSkill> activities;
 
-    public Schedule(List<Long> employeeIds, List<Long> petIds, LocalDate date, Set<EmployeeSkill> activities) {
+    public Schedule(List<Employee> employeeIds, List<Pet> petIds, LocalDate date, Set<EmployeeSkill> activities) {
 
         this.employeeIds = employeeIds;
         this.petIds = petIds;
@@ -46,19 +49,19 @@ public class Schedule {
         this.id = id;
     }
 
-    public List<Long> getEmployeeIds() {
+    public List<Employee> getEmployeeIds() {
         return employeeIds;
     }
 
-    public void setEmployeeIds(List<Long> employeeIds) {
+    public void setEmployeeIds(List<Employee> employeeIds) {
         this.employeeIds = employeeIds;
     }
 
-    public List<Long> getPetIds() {
+    public List<Pet> getPetIds() {
         return petIds;
     }
 
-    public void setPetIds(List<Long> petIds) {
+    public void setPetIds(List<Pet> petIds) {
         this.petIds = petIds;
     }
 

@@ -18,8 +18,8 @@ public class CustomerService {
     @Autowired
     PetRepository petRepository;
 
-    public Long save(Customer customer) {
-        return customerRepository.save(customer).getId();
+    public Customer save(Customer customer) {
+        return customerRepository.save(customer);
     }
 
     public Customer findById(Long id) {
@@ -31,7 +31,9 @@ public class CustomerService {
     }
 
     public Customer findByPet(Long petId){
-        return petRepository.findById(petId).get().getOwner();
+        Customer customer=customerRepository.findByPetsId(petId);
+        System.out.println("Customer in findByPet, has name: "+customer.getName()+"and phonenumber: "+customer.getPhoneNumber());
+        return customer;
 
     }
 
@@ -40,6 +42,7 @@ public class CustomerService {
         pet.setOwner(c);
         c.getPets().add(pet);
     }
+
     public Customer getOne(Long id){
         return customerRepository.getOne(id);
     }
