@@ -1,7 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
-import com.udacity.jdnd.course3.critter.Entities.Customer;
-import com.udacity.jdnd.course3.critter.Entities.Pet;
+import com.udacity.jdnd.course3.critter.user.Customer;
 import com.udacity.jdnd.course3.critter.Service.CustomerService;
 import com.udacity.jdnd.course3.critter.Service.PetService;
 import org.springframework.beans.BeanUtils;
@@ -60,7 +59,8 @@ public class PetController {
     private PetDTO convertPetToPetDTO(Pet pet) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(pet, petDTO,"owner");
-        petDTO.setOwnerId(pet.getOwner().getId());
+        Customer customer = customerService.getOne(pet.getOwner().getId());
+        petDTO.setOwnerId(customer.getId());
         return petDTO;
     }
 

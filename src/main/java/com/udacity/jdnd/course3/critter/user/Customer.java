@@ -1,12 +1,11 @@
-package com.udacity.jdnd.course3.critter.Entities;
+package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.pet.Pet;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Customer {

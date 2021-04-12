@@ -1,10 +1,6 @@
 package com.udacity.jdnd.course3.critter.user;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.udacity.jdnd.course3.critter.Entities.Customer;
-import com.udacity.jdnd.course3.critter.Entities.Employee;
-import com.udacity.jdnd.course3.critter.Entities.Pet;
+import com.udacity.jdnd.course3.critter.pet.Pet;
 import com.udacity.jdnd.course3.critter.Service.CustomerService;
 import com.udacity.jdnd.course3.critter.Service.EmployeeService;
 import com.udacity.jdnd.course3.critter.Service.PetService;

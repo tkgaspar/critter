@@ -1,17 +1,14 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
-import com.udacity.jdnd.course3.critter.Entities.Employee;
-import com.udacity.jdnd.course3.critter.Entities.Pet;
-import com.udacity.jdnd.course3.critter.Entities.Schedule;
+import com.udacity.jdnd.course3.critter.user.Employee;
+import com.udacity.jdnd.course3.critter.pet.Pet;
 import com.udacity.jdnd.course3.critter.Repositories.ScheduleRepository;
 import com.udacity.jdnd.course3.critter.Service.CustomerService;
 import com.udacity.jdnd.course3.critter.Service.EmployeeService;
 import com.udacity.jdnd.course3.critter.Service.PetService;
 import com.udacity.jdnd.course3.critter.Service.ScheduleService;
-import com.udacity.jdnd.course3.critter.user.EmployeeDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

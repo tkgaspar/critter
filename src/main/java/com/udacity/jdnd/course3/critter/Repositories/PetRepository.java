@@ -1,6 +1,6 @@
 package com.udacity.jdnd.course3.critter.Repositories;
 
-import com.udacity.jdnd.course3.critter.Entities.Pet;
+import com.udacity.jdnd.course3.critter.pet.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

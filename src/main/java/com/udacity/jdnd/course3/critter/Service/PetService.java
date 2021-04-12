@@ -1,13 +1,11 @@
 package com.udacity.jdnd.course3.critter.Service;
 
 
-import com.udacity.jdnd.course3.critter.Entities.Customer;
-import com.udacity.jdnd.course3.critter.Entities.Pet;
+import com.udacity.jdnd.course3.critter.user.Customer;
+import com.udacity.jdnd.course3.critter.pet.Pet;
 import com.udacity.jdnd.course3.critter.Repositories.CustomerRepository;
 import com.udacity.jdnd.course3.critter.Repositories.PetRepository;
-import com.udacity.jdnd.course3.critter.pet.PetDTO;
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

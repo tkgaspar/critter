@@ -1,7 +1,6 @@
 package com.udacity.jdnd.course3.critter.Service;
 
-import com.udacity.jdnd.course3.critter.Entities.Employee;
-import com.udacity.jdnd.course3.critter.Entities.Pet;
+import com.udacity.jdnd.course3.critter.user.Employee;
 import com.udacity.jdnd.course3.critter.Repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
