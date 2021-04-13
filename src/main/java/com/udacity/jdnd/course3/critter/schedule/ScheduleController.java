@@ -2,8 +2,6 @@ package com.udacity.jdnd.course3.critter.schedule;
 
 import com.udacity.jdnd.course3.critter.user.Employee;
 import com.udacity.jdnd.course3.critter.pet.Pet;
-import com.udacity.jdnd.course3.critter.Repositories.ScheduleRepository;
-import com.udacity.jdnd.course3.critter.Service.CustomerService;
 import com.udacity.jdnd.course3.critter.Service.EmployeeService;
 import com.udacity.jdnd.course3.critter.Service.PetService;
 import com.udacity.jdnd.course3.critter.Service.ScheduleService;
@@ -27,13 +25,10 @@ public class ScheduleController {
     @Autowired
     PetService petService;
     @Autowired
-    CustomerService customerService;
-    @Autowired
     EmployeeService employeeService;
-    @Autowired
-    ScheduleRepository scheduleRepository;
 
-    @PostMapping
+
+    @PutMapping
     public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
         Schedule newSchedule = new Schedule();
         BeanUtils.copyProperties(scheduleDTO, newSchedule);
@@ -70,13 +65,13 @@ public class ScheduleController {
     @GetMapping("/pet/{petId}")
     public List<ScheduleDTO> getScheduleForPet(@PathVariable long petId) {
         List<ScheduleDTO> allScheduleDTOs = new ArrayList<>();
-        List<Schedule>allSchedules=scheduleRepository.findByPetIds_Id(petId);
+        List<Schedule>allSchedules=scheduleService.findByPetId(petId);
         return convertSchedulesToScheduleDTOs(allSchedules,allScheduleDTOs);
     }
 
     @GetMapping("/employee/{employeeId}")
     public List<ScheduleDTO> getScheduleForEmployee(@PathVariable long employeeId) {
-        List<Schedule> allSchedules = scheduleRepository.findByEmployeeIds_Id(employeeId);
+        List<Schedule> allSchedules = scheduleService.findByEmployeeId(employeeId);
         List<ScheduleDTO> allScheduleDTOs = new ArrayList<>();
         return convertSchedulesToScheduleDTOs(allSchedules,allScheduleDTOs);
 
@@ -84,7 +79,7 @@ public class ScheduleController {
 
     @GetMapping("/customer/{customerId}")
     public List<ScheduleDTO> getScheduleForCustomer(@PathVariable long customerId) {
-        List<Schedule> allSchedules = scheduleRepository.findByCustomerIds_Id(customerId);
+        List<Schedule> allSchedules = scheduleService.getScheduleForCustomer(customerId);
         List<ScheduleDTO> allScheduleDTOs = new ArrayList<>();
         return convertSchedulesToScheduleDTOs(allSchedules,allScheduleDTOs);
     }

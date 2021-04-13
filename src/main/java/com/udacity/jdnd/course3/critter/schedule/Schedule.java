@@ -23,9 +23,6 @@ public class Schedule {
     @Column(name="SCHEDULE_PETIDS")
     @ManyToMany(targetEntity = Pet.class)
     private List<Pet> petIds;
-    @Column(name="SCHEDULE_CUSTOMERIDS")
-    @ManyToMany(targetEntity = Customer.class)
-    private List<Customer> customerIds;
 
     private LocalDate date;
 

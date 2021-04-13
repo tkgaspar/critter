@@ -31,7 +31,6 @@ public class CustomerService {
 
     public Customer findByPet(Long petId){
         Customer customer=customerRepository.findByPetsId(petId);
-        System.out.println("Customer in findByPet, has name: "+customer.getName()+"and phonenumber: "+customer.getPhoneNumber());
         return customer;
 
     }
